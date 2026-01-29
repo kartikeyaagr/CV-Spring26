@@ -55,19 +55,72 @@ document.addEventListener("DOMContentLoaded", () => {
     const upBtn = item.querySelector(".upvote");
     const downBtn = item.querySelector(".downvote");
 
-    const updateCount = (change) => {
-      let current = parseInt(countSpan.textContent);
-      const newCount = current + change;
-      countSpan.textContent = newCount;
-      saveVote(id, newCount);
+    // Initialize UI based on saved user vote
+    const savedUserVote = parseInt(localStorage.getItem(`userVote_${id}`)) || 0;
+    if (savedUserVote === 1) upBtn.classList.add("active");
+    if (savedUserVote === -1) downBtn.classList.add("active");
 
-      // Simple animation
+    const updateVote = (type) => {
+      let currentTotal = parseInt(localStorage.getItem(`vote_${id}`)) || 0;
+      let currentUserVote =
+        parseInt(localStorage.getItem(`userVote_${id}`)) || 0;
+
+      let newTotal = currentTotal;
+      let newUserVote = 0;
+
+      // Logic for Upvote
+      if (type === "up") {
+        if (currentUserVote === 1) {
+          // Toggle off
+          newTotal--;
+          newUserVote = 0;
+          upBtn.classList.remove("active");
+        } else if (currentUserVote === -1) {
+          // Switch from down to up
+          newTotal += 2;
+          newUserVote = 1;
+          downBtn.classList.remove("active");
+          upBtn.classList.add("active");
+        } else {
+          // Fresh upvote
+          newTotal++;
+          newUserVote = 1;
+          upBtn.classList.add("active");
+        }
+      }
+      // Logic for Downvote
+      else if (type === "down") {
+        if (currentUserVote === -1) {
+          // Toggle off
+          newTotal++;
+          newUserVote = 0;
+          downBtn.classList.remove("active");
+        } else if (currentUserVote === 1) {
+          // Switch from up to down
+          newTotal -= 2;
+          newUserVote = -1;
+          upBtn.classList.remove("active");
+          downBtn.classList.add("active");
+        } else {
+          // Fresh downvote
+          newTotal--;
+          newUserVote = -1;
+          downBtn.classList.add("active");
+        }
+      }
+
+      // Save and Update UI
+      saveVote(id, newTotal);
+      localStorage.setItem(`userVote_${id}`, newUserVote);
+      countSpan.textContent = newTotal;
+
+      // Animation
       countSpan.style.transform = "scale(1.2)";
       setTimeout(() => (countSpan.style.transform = "scale(1)"), 150);
     };
 
-    upBtn.addEventListener("click", () => updateCount(1));
-    downBtn.addEventListener("click", () => updateCount(-1));
+    upBtn.addEventListener("click", () => updateVote("up"));
+    downBtn.addEventListener("click", () => updateVote("down"));
   });
 
   // Lightbox Logic

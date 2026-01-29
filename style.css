@@ -53,6 +53,7 @@ body {
   font-weight: 800;
   letter-spacing: -0.05em;
   background: linear-gradient(135deg, #fff 30%, #60a5fa 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
@@ -267,6 +268,18 @@ body {
   border-color: rgba(239, 68, 68, 0.3);
 }
 
+.vote-btn.upvote.active {
+  background-color: rgba(59, 130, 246, 0.2);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.vote-btn.downvote.active {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border-color: #ef4444;
+}
+
 .vote-count {
   font-size: 1.25rem;
   font-weight: 700;
@@ -350,4 +363,55 @@ body {
     width: 100%;
     justify-content: space-between;
   }
+}
+
+/* Explanation Section */
+.explanation-section {
+  background-color: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  padding: 4rem 0;
+  margin-top: 4rem;
+}
+
+.explanation-box {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.explanation-box h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, #fff 30%, #60a5fa 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.explanation-group {
+  margin-bottom: 2.5rem;
+}
+
+.explanation-group:last-child {
+  margin-bottom: 0;
+}
+
+.explanation-group h3 {
+  font-size: 1.25rem;
+  color: var(--primary);
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.explanation-group p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.explanation-group strong {
+  color: var(--text-primary);
+  font-weight: 600;
 }
